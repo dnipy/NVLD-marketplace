@@ -1,0 +1,9 @@
+{
+    "name": "nft-marketplace-monorepo",
+    "private": false,
+    "workspaces": [
+      "packages/server",
+      "packages/ui",
+      "packages/contract"
+    ]
+  }

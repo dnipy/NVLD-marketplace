@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int           @id @default(autoincrement())
+  username    String        @unique
+  email       String        @unique
+  nfts        NFT[]
+  createdAt   DateTime      @default(now())
+  Transaction Transaction[]
+}
+
+model NFT {
+  id          Int           @id @default(autoincrement())
+  title       String
+  description String
+  ownerId     Int
+  owner       User          @relation(fields: [ownerId], references: [id])
+  createdAt   DateTime      @default(now())
+  Transaction Transaction[]
+}
+
+model Transaction {
+  id        Int      @id @default(autoincrement())
+  nftId     Int
+  nft       NFT      @relation(fields: [nftId], references: [id])
+  buyerId   Int
+  buyer     User     @relation(fields: [buyerId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Base64File {
+  id           Int      @unique @default(autoincrement())
+  name         String?
+  content_type String
+  content      String
+  CreateDate   DateTime @default(now())
+}

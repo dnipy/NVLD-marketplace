@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  redis:
+    image: redis
+    container_name: dev-redis-base-server
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - my-network
+
+  postgres:
+    image: postgres
+    container_name: dev-postgresql-base-server
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: nftdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: testpass1234
+    networks:
+      - my-network
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  redis_data:
+  postgres_data:
+  node_modules:
+
+networks:
+  my-network:
